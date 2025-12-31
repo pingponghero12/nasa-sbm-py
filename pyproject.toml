@@ -1,0 +1,68 @@
+[build-system]
+requires = [
+    "setuptools>=45",
+    "wheel",
+    "scikit-build-core>=0.3.3",
+    "pybind11>=2.10.0",
+]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "nasa-sbm-py"
+version = "0.1.0"
+description = "Extended Python bindings for ESA NASA Standard Breakup Model"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "GPL-3.0"}
+authors = [
+    {name = "Manfred Gawlas", email = ""}
+]
+keywords = ["nasa", "breakup", "debris", "space", "orbital", "satellite"]
+classifiers = [
+    "Development Status ::  3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: C++",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+
+dependencies = [
+    "numpy>=1.20.0",
+    "xarray>=2022.3.0",
+    "netCDF4>=1.5.8",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=3.0",
+    "black>=22.0",
+    "mypy>=0.950",
+]
+
+[project.urls]
+Homepage = "https://github.com/pingponghero12/nasa-sbm-py"
+Repository = "https://github.com/pingponghero12/nasa-sbm-py"
+Documentation = "https://github.com/pingponghero12/nasa-sbm-py#readme"
+
+[project.scripts]
+nasa-sbm = "nasa_sbm.cli:main"
+
+[tool.scikit-build]
+cmake. minimum-version = "3.15"
+cmake.build-type = "Release"
+wheel.packages = ["nasa_sbm"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*"
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311']

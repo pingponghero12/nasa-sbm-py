@@ -3,6 +3,7 @@
 import argparse
 import sys
 from nasa_sbm import explosion, collision
+from nasa_sbm.visualization import visualize_all
 
 
 def main():
@@ -13,6 +14,7 @@ def main():
 Examples: 
   nasa-sbm explosion --mass 839 --sat-type rocket_body --cutoff 0.05 --out debris.nc
   nasa-sbm collision --mass1 560 --mass2 950 --velocity 11.7 --out debris.nc
+  nasa-sbm explosion --mass 839 --cutoff 0.05 --out debris.nc --vis
         """
     )
     
@@ -31,6 +33,8 @@ Examples:
     exp_parser.add_argument('--seed', type=int, help='Random seed')
     exp_parser.add_argument('--enforce-mass-conservation', action='store_true',
                            help='Enforce mass conservation')
+    exp_parser.add_argument('--vis', action='store_true',
+                           help='Generate visualization plots')
     
     # Collision subcommand
     col_parser = subparsers.add_parser('collision', help='Satellite collision')
@@ -51,6 +55,8 @@ Examples:
     col_parser.add_argument('--seed', type=int, help='Random seed')
     col_parser.add_argument('--enforce-mass-conservation', action='store_true',
                            help='Enforce mass conservation')
+    col_parser.add_argument('--vis', action='store_true',
+                           help='Generate visualization plots')
     
     args = parser.parse_args()
     
@@ -76,6 +82,10 @@ Examples:
         fragments.to_netcdf(args.out)
         print(f"Saved to {args.out}")
         
+        if args.vis:
+            print("Generating visualizations...")
+            visualize_all(fragments, show=True)
+        
     elif args.command == 'collision':
         print(f"Running collision simulation...")
         print(f"  Mass 1: {args.mass1} kg ({args.sat_type1})")
@@ -97,6 +107,10 @@ Examples:
         print(f"Generated {len(fragments.fragment)} fragments")
         fragments.to_netcdf(args.out)
         print(f"Saved to {args.out}")
+        
+        if args.vis:
+            print("Generating visualizations...")
+            visualize_all(fragments, show=True)
 
 
 if __name__ == '__main__':

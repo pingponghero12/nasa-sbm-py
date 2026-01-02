@@ -169,4 +169,4 @@ GPL-3.0 - See LICENSE file for details
 
 ## Acknowledgments
 
-Built on the ESA-validated C++ implementation of the NASA Standard Breakup Model. 
+Built on top of ESA C++ implementation of the NASA Standard Breakup Model. 

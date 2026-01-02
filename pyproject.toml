@@ -12,7 +12,7 @@ name = "nasa-sbm-py"
 version = "0.1.0"
 description = "Extended Python bindings for ESA NASA Standard Breakup Model"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.8,<3.11"
 license = {text = "GPL-3.0"}
 authors = [
     {name = "Manfred Gawlas", email = ""}

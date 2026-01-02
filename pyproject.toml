@@ -36,6 +36,7 @@ dependencies = [
     "xarray>=2022.3.0",
     "netCDF4>=1.5.8",
     "matplotlib>=3.5.0",
+    "poliastro>=0.17.0",
 ]
 
 [project.optional-dependencies]

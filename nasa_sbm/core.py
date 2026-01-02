@@ -8,7 +8,7 @@ from typing import Optional, Literal, Tuple
 try:
     from nasa_sbm import _core
 except ImportError:
-    from .  import _core
+    from . import _core
 
 
 def explosion(
@@ -22,7 +22,7 @@ def explosion(
     velocity: Optional[Tuple[float, float, float]] = None,
 ) -> xr.Dataset:
     """Generate debris cloud from satellite explosion."""
-    sim = _core. BreakupSimulation()
+    sim = _core.BreakupSimulation()
 
     # Prepare optional arguments for C++
     cpp_kwargs = {
@@ -41,11 +41,11 @@ def explosion(
     elif orbit_altitude is not None:
         cpp_kwargs['orbit_altitude'] = orbit_altitude
 
-    sim. run_explosion(**cpp_kwargs)
+    sim.run_explosion(**cpp_kwargs)
 
     fragments = sim.get_fragments()
     n_fragments = sim.get_fragment_count()
-    stored_altitude = sim. get_orbit_altitude()
+    stored_altitude = sim.get_orbit_altitude()
 
     coords = {
         'fragment':  np.arange(n_fragments),
@@ -125,7 +125,7 @@ def collision(
 
     sim.run_collision(**cpp_kwargs)
 
-    fragments = sim. get_fragments()
+    fragments = sim.get_fragments()
     n_fragments = sim.get_fragment_count()
     stored_altitude = sim.get_orbit_altitude()
 

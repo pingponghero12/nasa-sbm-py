@@ -64,7 +64,7 @@ def test_cli_collision_run(tmp_path):
 
 
 def test_cli_explosion_with_options(tmp_path):
-    output_file = tmp_path / "test_rocket. nc"
+    output_file = tmp_path / "test_rocket.nc"
     
     result = subprocess.run([
         'nasa-sbm', 'explosion',

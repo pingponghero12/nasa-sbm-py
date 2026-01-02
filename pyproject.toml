@@ -17,7 +17,7 @@ license = {text = "GPL-3.0"}
 authors = [
     {name = "Manfred Gawlas", email = ""}
 ]
-keywords = ["nasa", "breakup", "debris", "space", "orbital", "satellite"]
+keywords = ["nasa", "breakup", "debris", "space", "orbital", "satellite", "esa"]
 classifiers = [
     "Development Status ::  3 - Alpha",
     "Intended Audience :: Science/Research",

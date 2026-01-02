@@ -33,7 +33,7 @@ def test_explosion_satellite_types():
 
 
 def test_collision_basic():
-    fragments = collision(mass1=100.0, mass2=200.0, velocity=10.0, cutoff=0.1, seed=42)
+    fragments = collision(mass1=100.0, mass2=200.0, velocity_relative=10.0, cutoff=0.1, seed=42)
     
     assert len(fragments.fragment) > 0
     assert (fragments.fragment_mass > 0).all()
@@ -42,8 +42,8 @@ def test_collision_basic():
 
 
 def test_collision_reproducible():
-    frag1 = collision(mass1=100.0, mass2=200.0, velocity=10.0, cutoff=0.1, seed=42)
-    frag2 = collision(mass1=100.0, mass2=200.0, velocity=10.0, cutoff=0.1, seed=42)
+    frag1 = collision(mass1=100.0, mass2=200.0, velocity_relative=10.0, cutoff=0.1, seed=42)
+    frag2 = collision(mass1=100.0, mass2=200.0, velocity_relative=10.0, cutoff=0.1, seed=42)
     
     assert len(frag1.fragment) == len(frag2.fragment)
     np.testing.assert_array_equal(frag1.fragment_mass.values, frag2.fragment_mass.values)
@@ -70,5 +70,15 @@ def test_dataset_structure():
     assert 'xyz' in fragments.dims
     assert 'fragment_size' in fragments.data_vars
     assert 'fragment_mass' in fragments.data_vars
-    assert 'delta_velocity' in fragments.data_vars
-    assert fragments.delta_velocity.shape[1] == 3
+    assert 'velocity' in fragments.data_vars
+    assert 'ejection_velocity' in fragments.data_vars
+    assert fragments.velocity.shape[1] == 3
+    assert fragments.ejection_velocity.shape[1] == 3
+
+
+def test_orbit_altitude_parameter():
+    """Test that orbit altitude parameter works."""
+    fragments = explosion(mass=100.0, cutoff=0.1, seed=42, orbit_altitude=400.0)
+    
+    assert 'orbit_altitude_km' in fragments.attrs
+    assert fragments.attrs['orbit_altitude_km'] == 400.0

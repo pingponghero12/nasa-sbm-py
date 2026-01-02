@@ -128,6 +128,10 @@ plot_size_distribution(fragments, show=True)
 figs = visualize_all(fragments, output_dir="plots", show=False)
 ```
 
+![1](images/gabbard.png)
+![2](images/velocity_3d.png)
+![3](images/size_dist.png)
+
 ### Working with NetCDF Files
 
 ```python

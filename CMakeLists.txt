@@ -40,7 +40,9 @@ FetchContent_Declare(
 # Make dependencies available
 FetchContent_MakeAvailable(spdlog yaml-cpp)
 
-find_package(TBB)
+if(NOT MSVC)
+    find_package(TBB REQUIRED)
+endif()
 
 include_directories(
     ${NASA_SBM_SOURCE_DIR}/src
@@ -64,6 +66,10 @@ target_link_libraries(_core PRIVATE
     spdlog::spdlog
     yaml-cpp
 )
+
+if(NOT MSVC)
+    target_link_libraries(_core PRIVATE TBB::tbb)
+endif()
 
 target_compile_definitions(_core PRIVATE
     SPDLOG_COMPILED_LIB

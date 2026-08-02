@@ -40,10 +40,6 @@ FetchContent_Declare(
 # Make dependencies available
 FetchContent_MakeAvailable(spdlog yaml-cpp)
 
-if(NOT MSVC)
-    find_package(TBB REQUIRED)
-endif()
-
 include_directories(
     ${NASA_SBM_SOURCE_DIR}/src
     ${spdlog_SOURCE_DIR}/include
@@ -67,13 +63,18 @@ target_link_libraries(_core PRIVATE
     yaml-cpp
 )
 
-if(NOT MSVC)
-    target_link_libraries(_core PRIVATE TBB::tbb)
-endif()
-
 target_compile_definitions(_core PRIVATE
     SPDLOG_COMPILED_LIB
 )
+
+# The upstream model shares a seeded RNG across parallel algorithms. Although
+# access is locked, scheduling changes which fragment receives each random
+# value, so identical seeds do not produce identical results. Use the serial
+# PSTL backend until the upstream implementation assigns RNG streams
+# deterministically per fragment.
+if(NOT MSVC)
+    target_compile_definitions(_core PRIVATE _PSTL_PAR_BACKEND_SERIAL)
+endif()
 
 set_target_properties(_core PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/nasa_sbm"
